@@ -1,0 +1,21 @@
+{
+  "name": "prismaworkshop",
+  "version": "1.0.0",
+  "description": "workshop project for prisma orm",
+  "main": "main.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "workshop",
+    "prisma"
+  ],
+  "author": "Markus Möller",
+  "license": "MIT",
+  "devDependencies": {
+    "typescript": "^5.3.3"
+  },
+  "dependencies": {
+    "ts-node": "^10.9.2"
+  }
+}
