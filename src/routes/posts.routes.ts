@@ -1,29 +1,43 @@
 import {Request, Response, Router} from "express";
-import {Prisma} from "../../lib/prisma";
+import {PrismaService} from "../../lib/prisma.service";
 import {PostsController} from "../controller/posts.controller";
-import {Post} from "@prisma/client";
+import {Post, Prisma} from "@prisma/client";
+import {PostSelection, PostUpdateParams} from "../controller/posts.controller.types";
+import QueryString from "qs";
 
 const postsRouter: Router = Router();
-const controller: PostsController = new PostsController(Prisma.getClient())
+const controller: PostsController = new PostsController(PrismaService.getClient())
 
 postsRouter.get('/posts', async (req: Request, res: Response): Promise<void> => {
-  const posts: Post[] = await controller.getAllPosts()
+  const query: QueryString.ParsedQs = req.query
+  
+  const pgNumber: number = Number(query.pgNumber)
+  const pgSize: number = Number(query.pgSize)
+  
+  const posts: PostSelection[] = await controller.getAllPosts(pgNumber, pgSize)
   res.json(posts)
 })
 
 postsRouter.post('/posts', async (req: Request, res: Response): Promise<void>  => {
-  const {title, content} = req.body
+  const {title, content, published} = req.body
   const post: Post = await controller.createPost({
     title,
-    content
+    content,
+    published
   })
   
   res.json(post)
 })
 
+postsRouter.get('/posts/aggregation', async (req: Request, res: Response): Promise<void> => {
+  const aggregation: Prisma.GetProfileAggregateType<any> = await controller.aggregatePosts()
+  
+  res.json(aggregation)
+})
+
 postsRouter.get('/posts/:id', async (req: Request, res: Response): Promise<void> => {
   const { id } = req.params
-  const post: Post | null = await controller.getPostById(Number(id))
+  const post: PostSelection | null = await controller.getPostById(Number(id))
   
   if (!post) {
     console.log('[postsRouter.get] Post not found')
@@ -36,12 +50,15 @@ postsRouter.get('/posts/:id', async (req: Request, res: Response): Promise<void>
 
 postsRouter.put('/posts/:id', async (req: Request, res: Response): Promise<void> => {
   const { id } = req.params
-  const {title, content} = req.body
-  const post: Post = await controller.updatePostById({
+  const {title, content, published} = req.body
+  const updateData: PostUpdateParams = {
     id: Number(id),
     title,
-    content
-  })
+    content,
+    published
+  }
+  
+  const post: PostSelection = await controller.updatePostById(updateData)
   
   res.json(post)
 })
