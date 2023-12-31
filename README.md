@@ -18,3 +18,13 @@ Advanced Features:
 - Relation Filters
 - Operators
 - Transactions
+
+## Additional Information
+- [Prisma Docs](https://www.prisma.io/docs/)
+- [Prisma Client API](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client/api)
+- [Prisma Query API](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client/crud)
+- [Prisma Migrate API](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-migrate)
+- [Prisma Studio](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-studio)
+
+## Additional Generators
+- [ERD Generator](https://github.com/samchon/prisma-markdown?tab=readme-ov-file)

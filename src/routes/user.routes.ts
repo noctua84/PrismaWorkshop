@@ -16,7 +16,7 @@ userRouter.post('/users', async (req: Request, res: Response): Promise<void>  =>
   const user: User = await controller.createUser({
     name,
     email,
-    role
+    role,
   })
   
   res.json(user)
@@ -37,13 +37,13 @@ userRouter.get('/users/:id', async (req: Request, res: Response): Promise<void> 
 
 userRouter.put('/users/:id', async (req: Request, res: Response): Promise<void> => {
   const { id } = req.params
-  const {name, email, role, posts} = req.body
+  const {name, email, role, profile} = req.body
   const updateData: UserUpdateParams = {
     id: Number(id),
     name,
     email,
     role,
-    posts
+    profile,
   }
   
   const user: User = await controller.updateUserById(updateData)

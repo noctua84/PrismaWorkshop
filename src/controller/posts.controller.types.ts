@@ -25,9 +25,36 @@ export interface PostSelectionArgs {
     }
     categories: {
       select: {
-        name: boolean
+        category: {
+          select: {
+            name: boolean
+          }
+        }
       }
     }
+  }
+}
+
+export interface PostSelectionResult {
+  id: number
+  title: string
+  content: string | null
+  published: boolean
+  author: {
+    id: number
+    name: string
+    email: string
+  } | null,
+  categories: {
+    category: {
+      name: string
+    }
+  }[]
+}
+
+export interface PostCategories {
+  category: {
+    name: string
   }
 }
 
